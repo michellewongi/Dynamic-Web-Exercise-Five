@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header() {
+function Header({ logout }) {
   return (
     <header className="Header">
       <div className="Logo">Exercise Five</div>
@@ -8,6 +8,7 @@ function Header() {
         <a href="/">Login</a>
         <a href="/create">Create User</a>
         <a href="/user/:id">User Profile</a>
+        <a onClick={() => logout()}>Log Out</a>
       </nav>
     </header>
   );

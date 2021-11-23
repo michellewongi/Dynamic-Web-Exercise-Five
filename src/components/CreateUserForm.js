@@ -1,6 +1,6 @@
 import React from "react";
 
-function CreateUserForm(signUpUser) {
+function CreateUserForm({ signUpUser }) {
   return (
     <div className="Form">
       <h2>Create User Form</h2>
