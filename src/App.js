@@ -10,6 +10,7 @@ import CreateUser from "./pages/CreateUser";
 import UserProfile from "./pages/UserProfile";
 import Header from "./components/Header";
 import FirebaseConfig from "./components/FirebaseConfig";
+import Navigate from "./utils/Navigate";
 
 function App() {
   // Track if user is logged in
@@ -63,27 +64,42 @@ function App() {
     // fragment bc React only allows you to return a single element
     <>
       <Header logout={logout} />
-      <p>User {loggedIn ? `IS LOGGED IN` : `IS NOT LOGGED IN`}</p>
-      <p>Email: {userInformation.email}</p>
       <Router>
         <Routes>
-          <Route path="/user/:id" element={<UserProfile />} />
+          <Route
+            path="/user/:id"
+            element={
+              loggedIn ? (
+                <UserProfile userInformation={userInformation} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
           <Route
             path="/create"
             element={
-              <CreateUser
-                setLoggedIn={setLoggedIn}
-                setUserInformation={setUserInformation}
-              />
+              !loggedIn ? (
+                <CreateUser
+                  setLoggedIn={setLoggedIn}
+                  setUserInformation={setUserInformation}
+                />
+              ) : (
+                <Navigate to={`/user/${userInformation.uid}`} />
+              )
             }
           />
           <Route
             path="/"
             element={
-              <Login
-                setLoggedIn={setLoggedIn}
-                setUserInformation={setUserInformation}
-              />
+              !loggedIn ? (
+                <Login
+                  setLoggedIn={setLoggedIn}
+                  setUserInformation={setUserInformation}
+                />
+              ) : (
+                <Navigate to={`/user/${userInformation.uid}`} />
+              )
             }
           />
         </Routes>

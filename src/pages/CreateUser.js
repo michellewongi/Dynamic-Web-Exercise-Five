@@ -31,7 +31,7 @@ function CreateUser({ setLoggedIn, setUserInformation }) {
   }, []);
 
   return (
-    <div>
+    <div className="PageWrapper">
       <h2>Create User</h2>
       <CreateUserForm signUpUser={signUpUser} />
     </div>
