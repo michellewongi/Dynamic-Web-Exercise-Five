@@ -13,7 +13,7 @@ function Header({ logout, loggedIn }) {
         )}
         {loggedIn && (
           <>
-            <a href="/user/:id">User Profile</a>
+            <a href="/user/id">User Profile</a>
             <a onClick={() => logout()}>Log Out</a>
           </>
         )}
