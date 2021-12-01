@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import "./App.css";
 // Pages import
 import Login from "./pages/Login";
@@ -10,7 +15,6 @@ import CreateUser from "./pages/CreateUser";
 import UserProfile from "./pages/UserProfile";
 import Header from "./components/Header";
 import FirebaseConfig from "./components/FirebaseConfig";
-import Navigate from "./utils/Navigate";
 
 function App() {
   // Track if user is logged in
@@ -35,14 +39,17 @@ function App() {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
+          // User is signed in, see dcos for a list of available
           setUserInformation(user);
           setLoggedIn(true);
         } else {
+          // user is signed out
           setUserInformation({});
           setLoggedIn(false);
         }
+        // Whenever state changes setLoading to false
+        setLoading(false);
       });
-      setLoading(false);
     }
   }, [appInitialized]);
 
@@ -58,12 +65,12 @@ function App() {
       });
   }
 
-  if (loading) return null;
+  if (loading || !appInitialized) return null;
 
   return (
     // fragment bc React only allows you to return a single element
     <>
-      <Header logout={logout} />
+      <Header logout={logout} loggedIn={loggedIn} />
       <Router>
         <Routes>
           <Route

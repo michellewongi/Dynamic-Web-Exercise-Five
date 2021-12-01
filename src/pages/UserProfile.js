@@ -1,5 +1,8 @@
 import React from "react";
 
+// NOTE: This page should query another user based on the user ID
+// get the current user's information
+
 function UserProfile({ userInformation }) {
   return (
     <div className="PageWrapper">
