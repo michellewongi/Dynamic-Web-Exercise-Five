@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import LoginForm from "../components/LoginForm";
 
-function Login({ setLoggedIn, setUserInformation }) {
+function Login({ setErrors, setLoggedIn, setUserInformation }) {
   const loginUser = useCallback(
     (e) => {
       e.preventDefault();
@@ -23,14 +23,16 @@ function Login({ setLoggedIn, setUserInformation }) {
             uid: user.uid,
             accessToken: user.accessToken,
           });
+          setErrors();
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.warn({ error, errorCode, errorMessage });
+          setErrors(errorMessage);
         });
     },
-    [setLoggedIn, setUserInformation]
+    [setErrors, setLoggedIn, setUserInformation]
   );
 
   return (

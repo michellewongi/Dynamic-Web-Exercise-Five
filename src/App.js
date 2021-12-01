@@ -21,15 +21,18 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   // check to see if there is any loading
   const [loading, setLoading] = useState(true);
+  // store user information in state
   const [userInformation, setUserInformation] = useState({});
   const [appInitialized, setAppInitialized] = useState(false);
+  // Error
+  const [errors, setErrors] = useState();
 
   // Ensure app is initialized when it is ready to be used
   useEffect(() => {
     // Initialize Firebase
     initializeApp(FirebaseConfig);
     setAppInitialized(true);
-  });
+  }, []);
 
   // Check to see if user is logged in
   // user loads page, check their status
@@ -59,9 +62,11 @@ function App() {
       .then(() => {
         setUserInformation({});
         setLoggedIn(false);
+        setErrors();
       })
       .catch((error) => {
         console.warn(error);
+        setErrors(error);
       });
   }
 
@@ -71,6 +76,7 @@ function App() {
     // fragment bc React only allows you to return a single element
     <>
       <Header logout={logout} loggedIn={loggedIn} />
+      {errors && <p className="Error PageWrapper">{errors}</p>}
       <Router>
         <Routes>
           <Route
@@ -90,6 +96,7 @@ function App() {
                 <CreateUser
                   setLoggedIn={setLoggedIn}
                   setUserInformation={setUserInformation}
+                  setErrors={errors}
                 />
               ) : (
                 <Navigate to={`/user/${userInformation.uid}`} />
