@@ -96,7 +96,7 @@ function App() {
                 <CreateUser
                   setLoggedIn={setLoggedIn}
                   setUserInformation={setUserInformation}
-                  setErrors={errors}
+                  setErrors={setErrors}
                 />
               ) : (
                 <Navigate to={`/user/${userInformation.uid}`} />
@@ -110,6 +110,7 @@ function App() {
                 <Login
                   setLoggedIn={setLoggedIn}
                   setUserInformation={setUserInformation}
+                  setErrors={setErrors}
                 />
               ) : (
                 <Navigate to={`/user/${userInformation.uid}`} />
